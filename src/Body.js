@@ -18,20 +18,25 @@ const Body = ({ name, rate }) => {
     setCurrentPage(pageNumber);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setFiltered(movielist && movielist.filter(current => {
       return current.name.toLowerCase().includes(name.toLowerCase())
     }))
   }, [ name, movielist ])
   
-
   useLayoutEffect(() => {
+    setFiltered(movielist && movielist.filter(current => {
+      return current.rating == rate
+    }))
+  }, [ rate, movielist  ])
+
+  useEffect(() => {
     fetch("https://public.connectnow.org.uk/applicant-test/")
       .then((response) => response.json())
       .then((data) => {
         setMovieList(data);
       });
-  }, [name]);
+  }, []);
 
   function roundOff(num) {
     return Math.ceil(num);
@@ -45,9 +50,6 @@ const Body = ({ name, rate }) => {
           paginate={paginate}
         />
         {/* <p style={{color: 'white'}}>taofik {name}</p> */}
-
-
-
 
 {/* <div style={{color: 'white'}}>{JSON.stringify(filtered)}</div> */}
       
@@ -72,7 +74,6 @@ const Body = ({ name, rate }) => {
             summary={movie.summary}
           />
         ))} */}
-
 
         <Pagination
           postsPerPage={postsPerPage}

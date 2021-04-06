@@ -8,7 +8,7 @@ import Layout from "./Layout";
 const Home = () => {
 
   const [name, setName] = useState('')
-  const [rate, setRate] = useState()
+  const [rate, setRate] = useState('')
 
   function nameChange(e){
     console.log('>>>>>>', e.target.value);
