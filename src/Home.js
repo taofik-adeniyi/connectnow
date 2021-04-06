@@ -19,13 +19,18 @@ const Home = () => {
     console.log('>>>>>>', e.target.value);
     setRate(e.target.value)
   }
+
+  function clear() {
+    setName('')
+    setRate('')
+  }
   
   return (
     <div>
       <Layout>
         <div className="main">
-          <SideNav name={name} setName={setName} nameChange={nameChange}  ratingChange={ratingChange} />
-          <Body name={name} rate={rate} />
+          <SideNav name={name} setName={setName} nameChange={nameChange}  ratingChange={ratingChange} clear={clear} />
+          <Body name={name} rate={rate} clear={clear} />
         </div>
       </Layout>
     </div>

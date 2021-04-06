@@ -3,7 +3,7 @@ import Card from "./Card";
 import Pagination from "./Pagination";
 import moment from 'moment';
 
-const Body = ({ name, rate }) => {
+const Body = ({ name, rate, clear }) => {
   const [filtered, setFiltered] = useState([])
   const [loading, setLoading] = useState(false);
   const [movielist, setMovieList] = useState([]);

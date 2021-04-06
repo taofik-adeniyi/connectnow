@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "./Input";
 
-const SideNav = ( {name, setName, nameChange, ratingChange } ) => {
+const SideNav = ( {name, setName, nameChange, ratingChange, clear } ) => {
 
   
   return (
@@ -52,7 +52,7 @@ const SideNav = ( {name, setName, nameChange, ratingChange } ) => {
             marginTop: "8px",
           }}
         >
-          <button>Clear</button>
+          <button onClick={clear}>Clear</button>
         </div>
       </div>
     </div>
