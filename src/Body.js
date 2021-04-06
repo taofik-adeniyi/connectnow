@@ -1,78 +1,84 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Card from "./Card";
-import axios from "axios"
-import { movies } from "./movies"
+import Pagination from "./Pagination";
+import moment from 'moment';
 
-const Body = () => {
-  const [movies, setMovies] = useState([])
-  var config = {
-    headers: {
-      'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9': '*',
-      'access-control-allow-headers': 'X-Requested-With, Origin, Content-Type',
-      'access-control-allow-origin': '*',
-      "access-control-allow-methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    }
+const Body = ({ name, rate }) => {
+  const [filtered, setFiltered] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [movielist, setMovieList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const curentMoviePage = movielist.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
-  useEffect(() => {
-     function fetchData() {
-      axios.get('https://public.connectnow.org.uk/applicant-test', config)
-      .then(response => console.log(response))
-      .catch(err => console.log(err))
-      // axios.get('https://public.connectnow.org.uk/applicant-test', config)
-      //   .then(response => {
-      //     console.log('d res', response)
-      //   })
-      //   .catch(error => {
-      //     console.log('d err', error);
-      //   })
-    }
-    fetchData()
-  }, [])
+
+  useLayoutEffect(() => {
+    setFiltered(movielist && movielist.filter(current => {
+      return current.name.toLowerCase().includes(name.toLowerCase())
+    }))
+  }, [ name, movielist ])
   
-  
-  console.log('the movies', movies);
+
+  useLayoutEffect(() => {
+    fetch("https://public.connectnow.org.uk/applicant-test/")
+      .then((response) => response.json())
+      .then((data) => {
+        setMovieList(data);
+      });
+  }, [name]);
+
+  function roundOff(num) {
+    return Math.ceil(num);
+  }
+
   return (
-    <div className="body">
-      <Card 
-        title="Game Title" 
-        releasedate="07/06/1993" 
-        rating="7"
-        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Vivamus viverra convallis ex. Ut consectetur scelerisque
-        efficitur. Mauris nec gravida dui. Proin urna leo, tempus vehicula
-        tempus ut, facilisis a mi. In eu arcu nulla. Aenean faucibus quam
-        ut purus ullamcorper tempor. Vivamus id hendrerit elit, et
-        imperdiet lacus. Nullam vehicula nisi vitae velit lobortis, id
-        euismod odio tincidunt. Quisque id feugiat orci. Donec viverra
-        pharetra lorem nec rhoncus." />
+    <div style={{ width: "70%" }}>
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={movielist.length}
+          paginate={paginate}
+        />
+        {/* <p style={{color: 'white'}}>taofik {name}</p> */}
 
-        <Card 
-        title="Game Title" 
-        releasedate="07/06/1993"
-        rating="9"
-        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Vivamus viverra convallis ex. Ut consectetur scelerisque
-        efficitur. Mauris nec gravida dui. Proin urna leo, tempus vehicula
-        tempus ut, facilisis a mi. In eu arcu nulla. Aenean faucibus quam
-        ut purus ullamcorper tempor." />
 
-        <Card 
-        title="Resident Evil" 
-        releasedate="07/06/1993"
-        rating="3"
-        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Vivamus viverra convallis ex. Ut consectetur scelerisque
-        efficitur. Mauris nec gravida dui." />
 
-        <Card 
-        title="Game Title" 
-        releasedate="07/06/1993"
-        rating="4"
-        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Vivamus viverra convallis ex. Ut consectetur scelerisque
-        efficitur. Mauris nec gravida dui. Proin urna leo, tempus vehicula
-        tempus ut, facilisis a mi. In eu arcu nulla. Aenean faucibus quam
-        ut purus ullamcorper tempor." />
+
+{/* <div style={{color: 'white'}}>{JSON.stringify(filtered)}</div> */}
+      
+      {
+          filtered && filtered.map((movie, i) => (
+            <Card
+            key={movie.id}
+            name={movie.name}
+            releasedate={moment(movie.first_release_date).format('DD-MM-YYYY')}
+            rating={roundOff(movie.rating)}
+            summary={movie.summary}
+          />
+          ))
+        }
+      {/* {curentMoviePage &&
+        curentMoviePage.map((movie) => (
+          <Card
+            key={movie.id}
+            name={movie.name}
+            releasedate={moment(movie.first_release_date).format('DD-MM-YYYY')}
+            rating={roundOff(movie.rating)}
+            summary={movie.summary}
+          />
+        ))} */}
+
+
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={movielist.length}
+          paginate={paginate}
+        />
     </div>
   );
 };

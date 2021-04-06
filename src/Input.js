@@ -1,11 +1,12 @@
 import React from "react";
 
-const Input = (props) => {
+const Input = ({ name, setName, title, placeholder, change }) => {
+  
   return (
     <div style={{ marginBottom: '40px'}}>
-      <div className="title">{props.title}</div>
+      <div className="title">{title}</div>
       <div>
-        <input className="myinput" type="text" placeholder={props.placeholder} />
+        <input onChange={change} value={name} className="myinput" type="text" placeholder={placeholder} />
       </div>
     </div>
   );

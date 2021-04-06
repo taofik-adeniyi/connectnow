@@ -1,17 +1,17 @@
 import React from "react";
 
-const Card = ({ title, releasedate, body, rating }) => {
+const Card = ({ name, releasedate, summary, rating }) => {
   return (
     <div className="card-wrapper">
       <div className="blank"></div>
 
       <div className="card">
         <div className="headings card-title" >
-          {title}
+          {name}
         </div>
         <div className="new">
           <div>Release Date: {releasedate}</div>
-          <p>[summary] {body}</p>
+          <p>[Summary] {summary}</p>
         </div>
       </div>
 
