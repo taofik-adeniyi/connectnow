@@ -2,7 +2,28 @@ import React, { useState } from "react";
 import Input from "./Input";
 import "./sidenav.css";
 
-const SideNav = ({ name, setName, nameChange, ratingChange, clear }) => {
+const SideNav = ({
+  name,
+  setName,
+  rate,
+  setRate,
+  nameChange,
+  ratingChange,
+  clear,
+  orderByName,
+  orderByRating,
+  orderByReleaseDate,
+}) => {
+  const [show, setshow] = useState(false);
+  const [orderreleasedate] = useState("Release Date");
+  const [orderscore] = useState("Score");
+  const [ordername] = useState("Name");
+
+  const handleShow = () => {
+    setshow(!show);
+    orderByReleaseDate()
+  };
+
   return (
     <div className="side-container">
       <div className="side-menu">
@@ -18,6 +39,8 @@ const SideNav = ({ name, setName, nameChange, ratingChange, clear }) => {
         />
         <Input
           change={ratingChange}
+          name={rate}
+          setName={setRate}
           title="Minimum Score"
           placeholder="1 - 10"
         />
@@ -25,21 +48,29 @@ const SideNav = ({ name, setName, nameChange, ratingChange, clear }) => {
           <h3 className="headings">Order Buy</h3>
         </div>
         <div className="icon-dropdown">
-          <div>
-            <i className="bi bi-arrow-up my-icon"></i>
+          <div className="icon-wrapper">
+            <i class="bi bi-arrow-up-short my-icon"></i>
           </div>
-          <div className="dropdown">
-            <div className="over">
-              <div className="user-name">Release Date</div>
-              <div className="dropdown-arrow"></div>
-              <div className="dropdown-menu">
-                <ul>
-                  <li>Release Date</li>
-                  <li>Score</li>
-                  <li>Name</li>
-                </ul>
+
+          <div className="drop-wrapper">
+            <div onClick={handleShow} className="drop-one-wrap">
+              <div className="release">{orderreleasedate}</div>
+              <div className="caret-wrapper">
+                <i
+                  class={`bi bi-caret-${show ? "up" : "down"}-fill my-icon`}
+                ></i>
               </div>
             </div>
+            {show && (
+              <div>
+                <div className="order-by" onClick={orderByRating}>
+                  {orderscore}
+                </div>
+                <div className="order-by" onClick={orderByName}>
+                  {ordername}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="clear-wrapper">

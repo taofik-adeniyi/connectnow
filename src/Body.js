@@ -2,9 +2,17 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import Card from "./Card";
 import Pagination from "./Pagination";
 import moment from "moment";
-import Spin from "./Spin"
+import Spin from "./Spin";
+import "./body.css";
 
-const Body = ({ name, rate, clear }) => {
+const Body = ({
+  name,
+  rate,
+  clear,
+  orderByName,
+  orderByRating,
+  orderByReleaseDate,
+}) => {
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
   const [movielist, setMovieList] = useState([]);
@@ -50,17 +58,16 @@ const Body = ({ name, rate, clear }) => {
     return Math.ceil(num);
   }
 
+
   return (
-    <div style={{ width: "70%" }}>
-      <Pagination
+    <div className="card-container-all">
+      {/* <Pagination
         postsPerPage={postsPerPage}
         totalPosts={movielist.length}
         paginate={paginate}
-      />
+      /> */}
 
-      <div style={{ color: "white", fontSize: "35px" }}>
-        {loading && <Spin />}
-      </div>
+      <div className="loader-wrapper">{loading && <Spin />}</div>
 
       {filtered &&
         filtered.map((movie, i) => (
@@ -73,11 +80,11 @@ const Body = ({ name, rate, clear }) => {
           />
         ))}
 
-      <Pagination
+      {/* <Pagination
         postsPerPage={postsPerPage}
         totalPosts={movielist.length}
         paginate={paginate}
-      />
+      /> */}
     </div>
   );
 };

@@ -1,18 +1,60 @@
+.icon-wrapper {
+  background-color: #5692e8;
+  width: 20%;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media only screen and (max-width: 1145px) {
+        .icon-wrapper {
+          width: 10%;
+        }
+      }
+@media only screen and (max-width: 480px) {
+  .icon-wrapper {
+    width: 10%;
+  }
+}
 .icon-dropdown {
-        height: 60px;
-        display: flex;
-        width: 100%;
+  display: flex;
+  width: 100%;
 }
 .my-icon {
-    font-size: 1.5rem;
-     color: blue
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: bold;
 }
 .dropdown {
-    width: 90%; height: 30px; 
-        background-color: yellow
+  width: 90%;
+  height: 35px;
+  background-color: #182c47;
 }
-.clear-wrapper {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 8px
+.drop-wrapper {
+  width: 100%;
+  background-color: #182c47;
+  font-size: 14px;
+  color: #ffffff;
+}
+@media only screen and (max-width: 480px) {
+  .drop-wrapper {
+    z-index: 100;
+  }
+}
+.drop-one-wrap {
+  padding: 10px 0 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.caret-wrapper {
+  margin: -5px 10px 0 0;
+}
+.release {
+        cursor: pointer;
+}
+.order-by {
+  padding: 10px;
+  cursor: pointer;
 }
