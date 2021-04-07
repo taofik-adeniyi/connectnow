@@ -1,4 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
+import axios from "axios";
+import "regenerator-runtime/runtime.js";
 import Card from "./Card";
 import Pagination from "./Pagination";
 import moment from "moment";
@@ -21,7 +23,7 @@ const Body = ({
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const curentMoviePage = movielist.slice(indexOfFirstPost, indexOfLastPost);
+  const curentMoviePage = filtered.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -29,7 +31,6 @@ const Body = ({
 
   useEffect(() => {
     setFiltered(
-      movielist &&
         movielist.filter((current) => {
           return current.name.toLowerCase().includes(name.toLowerCase());
         })
@@ -38,21 +39,22 @@ const Body = ({
 
   useLayoutEffect(() => {
     setFiltered(
-      movielist &&
         movielist.filter((current) => {
           return current.rating == rate;
         })
     );
   }, [rate, movielist]);
 
+  const fetchMovies = async () => {
+      setLoading(true)
+      const res = await axios.get('https://public.connectnow.org.uk/applicant-test/')
+      setMovieList(res.data)
+      setLoading(false)
+  }
   useEffect(() => {
-    fetch("https://public.connectnow.org.uk/applicant-test/")
-      .then((response) => response.json())
-      .then((data) => {
-        setMovieList(data);
-        setLoading(false);
-      });
-  }, []);
+    fetchMovies()
+    return true
+  },[])
 
   function roundOff(num) {
     return Math.ceil(num);
@@ -61,16 +63,10 @@ const Body = ({
 
   return (
     <div className="card-container-all">
-      {/* <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={movielist.length}
-        paginate={paginate}
-      /> */}
-
       <div className="loader-wrapper">{loading && <Spin />}</div>
 
-      {filtered &&
-        filtered.map((movie, i) => (
+        {curentMoviePage &&
+        curentMoviePage.map((movie, i) => (
           <Card
             key={movie.id}
             name={movie.name}
@@ -80,11 +76,13 @@ const Body = ({
           />
         ))}
 
-      {/* <Pagination
+      <div style={{height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '50px'}}>
+      <Pagination
         postsPerPage={postsPerPage}
-        totalPosts={movielist.length}
+        totalPosts={filtered.length}
         paginate={paginate}
-      /> */}
+      />
+      </div>
     </div>
   );
 };

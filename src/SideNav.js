@@ -21,7 +21,7 @@ const SideNav = ({
 
   const handleShow = () => {
     setshow(!show);
-    orderByReleaseDate()
+    // orderByReleaseDate();
   };
 
   return (
@@ -49,24 +49,26 @@ const SideNav = ({
         </div>
         <div className="icon-dropdown">
           <div className="icon-wrapper">
-            <i class="bi bi-arrow-up-short my-icon"></i>
+            <i className="bi bi-arrow-up-short my-icon"></i>
           </div>
 
           <div className="drop-wrapper">
             <div onClick={handleShow} className="drop-one-wrap">
               <div className="release">{orderreleasedate}</div>
               <div className="caret-wrapper">
-                <i
-                  class={`bi bi-caret-${show ? "up" : "down"}-fill my-icon`}
-                ></i>
+                <i className={`bi bi-caret-${show ? "up" : "down"}-fill my-icon`}></i>
               </div>
             </div>
             {show && (
               <div>
-                <div className="order-by" onClick={orderByRating}>
+                <div className="order-by" 
+                  // onClick={orderByRating}
+                  >
                   {orderscore}
                 </div>
-                <div className="order-by" onClick={orderByName}>
+                <div className="order-by" 
+                  // onClick={orderByName}
+                >
                   {ordername}
                 </div>
               </div>

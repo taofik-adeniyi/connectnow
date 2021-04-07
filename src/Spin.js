@@ -7,7 +7,7 @@ const Spin = () => {
          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '30vh'}}>
 
          <div className="loader">
-             loading
+             connect
          </div>
          </div>
         </>
