@@ -1,37 +1,34 @@
 import React, { useState } from "react";
 import Input from "./Input";
+import "./sidenav.css";
 
-const SideNav = ( {name, setName, nameChange, ratingChange, clear } ) => {
-
-  
+const SideNav = ({ name, setName, nameChange, ratingChange, clear }) => {
   return (
     <div className="side-container">
       <div className="side-menu">
         <div>
           <h2 className="headings">Filter Results</h2>
         </div>
-        <Input change={nameChange} name={name} setName={setName} title="Name (contains)" placeholder="Text String" />
-        <Input change={ratingChange} title="Minimum Score" placeholder="1 - 10" />
+        <Input
+          change={nameChange}
+          name={name}
+          setName={setName}
+          title="Name (contains)"
+          placeholder="Text String"
+        />
+        <Input
+          change={ratingChange}
+          title="Minimum Score"
+          placeholder="1 - 10"
+        />
         <div>
           <h3 className="headings">Order Buy</h3>
         </div>
-        <div
-          style={{
-            // backgroundColor: "purple",
-            height: "60px",
-            display: "flex",
-            width: "100%",
-          }}
-        >
+        <div className="icon-dropdown">
           <div>
-            <i
-              className="bi bi-arrow-up"
-              style={{ fontSize: "1.5rem", color: "blue" }}
-            ></i>
+            <i className="bi bi-arrow-up my-icon"></i>
           </div>
-          <div
-            style={{ width: "90%", height: "30px", backgroundColor: "yellow" }}
-          >
+          <div className="dropdown">
             <div className="over">
               <div className="user-name">Release Date</div>
               <div className="dropdown-arrow"></div>
@@ -45,13 +42,7 @@ const SideNav = ( {name, setName, nameChange, ratingChange, clear } ) => {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "8px",
-          }}
-        >
+        <div className="clear-wrapper">
           <button onClick={clear}>Clear</button>
         </div>
       </div>
